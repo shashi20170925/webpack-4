@@ -2,13 +2,14 @@ const path=require('path');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin=require('mini-css-extract-plugin');
 const CleanWebpackPlugin=require('clean-webpack-plugin');
+const HtmlWebpackPlugin=require('html-webpack-plugin');
 
 module.exports = {
     entry: './src/index.js',
     output: {
         filename: 'bundle.[contenthash].js',
         path: path.resolve(__dirname,'./dist'),
-        publicPath:'dist/'
+        publicPath:''
     },
     
     mode:'none',
@@ -47,7 +48,14 @@ module.exports = {
                 use: [
                     'xml-loader'
                 ]
+            },
+            {
+                test: /\.(hbs)$/, 
+                use: [
+                    'handlebars-loader'
+                ]
             }
+
 
         ]
     },
@@ -56,6 +64,11 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: 'style.[contenthash].css'
         }),
-        new CleanWebpackPlugin(['dist','trash'])
+        new CleanWebpackPlugin('dist'),
+        new HtmlWebpackPlugin({
+            title: "Hello World New",
+            template: 'src/index.hbs',
+            description: "Some description"
+        })
     ]
 }
