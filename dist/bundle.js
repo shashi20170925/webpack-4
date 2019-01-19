@@ -94,10 +94,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _add_image__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7);
 
 
-
-const helloWorldButton =new _components_hello_world_button_hello_world_button_js__WEBPACK_IMPORTED_MODULE_0__["default"]();
-helloWorldButton.render();
-//addImage();
+var helloWorldButton = new _components_hello_world_button_hello_world_button_js__WEBPACK_IMPORTED_MODULE_0__["default"]();
+helloWorldButton.render(); //addImage();
 
 /***/ }),
 /* 1 */
@@ -107,24 +105,45 @@ helloWorldButton.render();
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _hello_world_button_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
 /* harmony import */ var _hello_world_button_scss__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_hello_world_button_scss__WEBPACK_IMPORTED_MODULE_0__);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 
-class HelloWorldButton{
-    render(){
-        const button=document.createElement('button');
-        button.innerHTML='Hello World';
-        button.classList.add('hello-world-button');
-        button.click=function(){
-            const p=document.createElement('p');
-            p.innerHTML='Hello World';
-            p.classList.add('hello-world-text');
-            body.appendChild(p);
-        }
-        const body=document.querySelector('body');
-        body.appendChild(button);
 
+var HelloWorldButton =
+/*#__PURE__*/
+function () {
+  function HelloWorldButton() {
+    _classCallCheck(this, HelloWorldButton);
+
+    this.buttonClass = 'hello-world-button';
+  }
+
+  _createClass(HelloWorldButton, [{
+    key: "render",
+    value: function render() {
+      var button = document.createElement('button');
+      button.innerHTML = 'Hello World';
+      button.classList.add(this.buttonClass);
+
+      button.click = function () {
+        var p = document.createElement('p');
+        p.innerHTML = 'Hello World';
+        p.classList.add('hello-world-text');
+        body.appendChild(p);
+      };
+
+      var body = document.querySelector('body');
+      body.appendChild(button);
     }
-}
+  }]);
+
+  return HelloWorldButton;
+}();
+
 /* harmony default export */ __webpack_exports__["default"] = (HelloWorldButton);
 
 /***/ }),
@@ -168,12 +187,12 @@ exports.push([module.i, ".hello-world-button {\n  font-size: 20px;\n  padding: 7
 
 "use strict";
 
-
 /*
   MIT License http://www.opensource.org/licenses/mit-license.php
   Author Tobias Koppers @sokra
 */
 // css base code, injected by the css-loader
+
 module.exports = function (useSourceMap) {
   var list = []; // return the list of modules as css string
 
@@ -661,7 +680,6 @@ function updateLink (link, options, obj) {
 /* 6 */
 /***/ (function(module, exports) {
 
-
 /**
  * When source maps are enabled, `style-loader` uses a link element with a data-uri to
  * embed the css on the page. This breaks all relative urls because now they are relative to a
@@ -674,83 +692,78 @@ function updateLink (link, options, obj) {
  * A rudimentary test suite is located at `test/fixUrls.js` and can be run via the `npm test` command.
  *
  */
-
 module.exports = function (css) {
   // get current location
   var location = typeof window !== "undefined" && window.location;
 
   if (!location) {
     throw new Error("fixUrls requires window.location");
-  }
+  } // blank or null?
 
-	// blank or null?
-	if (!css || typeof css !== "string") {
-	  return css;
+
+  if (!css || typeof css !== "string") {
+    return css;
   }
 
   var baseUrl = location.protocol + "//" + location.host;
-  var currentDir = baseUrl + location.pathname.replace(/\/[^\/]*$/, "/");
+  var currentDir = baseUrl + location.pathname.replace(/\/[^\/]*$/, "/"); // convert each url(...)
 
-	// convert each url(...)
-	/*
-	This regular expression is just a way to recursively match brackets within
-	a string.
+  /*
+  This regular expression is just a way to recursively match brackets within
+  a string.
+  	 /url\s*\(  = Match on the word "url" with any whitespace after it and then a parens
+     (  = Start a capturing group
+       (?:  = Start a non-capturing group
+           [^)(]  = Match anything that isn't a parentheses
+           |  = OR
+           \(  = Match a start parentheses
+               (?:  = Start another non-capturing groups
+                   [^)(]+  = Match anything that isn't a parentheses
+                   |  = OR
+                   \(  = Match a start parentheses
+                       [^)(]*  = Match anything that isn't a parentheses
+                   \)  = Match a end parentheses
+               )  = End Group
+               *\) = Match anything and then a close parens
+           )  = Close non-capturing group
+           *  = Match anything
+        )  = Close capturing group
+   \)  = Match a close parens
+  	 /gi  = Get all matches, not the first.  Be case insensitive.
+   */
 
-	 /url\s*\(  = Match on the word "url" with any whitespace after it and then a parens
-	   (  = Start a capturing group
-	     (?:  = Start a non-capturing group
-	         [^)(]  = Match anything that isn't a parentheses
-	         |  = OR
-	         \(  = Match a start parentheses
-	             (?:  = Start another non-capturing groups
-	                 [^)(]+  = Match anything that isn't a parentheses
-	                 |  = OR
-	                 \(  = Match a start parentheses
-	                     [^)(]*  = Match anything that isn't a parentheses
-	                 \)  = Match a end parentheses
-	             )  = End Group
-              *\) = Match anything and then a close parens
-          )  = Close non-capturing group
-          *  = Match anything
-       )  = Close capturing group
-	 \)  = Match a close parens
+  var fixedCss = css.replace(/url\s*\(((?:[^)(]|\((?:[^)(]+|\([^)(]*\))*\))*)\)/gi, function (fullMatch, origUrl) {
+    // strip quotes (if they exist)
+    var unquotedOrigUrl = origUrl.trim().replace(/^"(.*)"$/, function (o, $1) {
+      return $1;
+    }).replace(/^'(.*)'$/, function (o, $1) {
+      return $1;
+    }); // already a full url? no change
 
-	 /gi  = Get all matches, not the first.  Be case insensitive.
-	 */
-	var fixedCss = css.replace(/url\s*\(((?:[^)(]|\((?:[^)(]+|\([^)(]*\))*\))*)\)/gi, function(fullMatch, origUrl) {
-		// strip quotes (if they exist)
-		var unquotedOrigUrl = origUrl
-			.trim()
-			.replace(/^"(.*)"$/, function(o, $1){ return $1; })
-			.replace(/^'(.*)'$/, function(o, $1){ return $1; });
+    if (/^(#|data:|http:\/\/|https:\/\/|file:\/\/\/|\s*$)/i.test(unquotedOrigUrl)) {
+      return fullMatch;
+    } // convert the url to a full url
 
-		// already a full url? no change
-		if (/^(#|data:|http:\/\/|https:\/\/|file:\/\/\/|\s*$)/i.test(unquotedOrigUrl)) {
-		  return fullMatch;
-		}
 
-		// convert the url to a full url
-		var newUrl;
+    var newUrl;
 
-		if (unquotedOrigUrl.indexOf("//") === 0) {
-		  	//TODO: should we add protocol?
-			newUrl = unquotedOrigUrl;
-		} else if (unquotedOrigUrl.indexOf("/") === 0) {
-			// path should be relative to the base url
-			newUrl = baseUrl + unquotedOrigUrl; // already starts with '/'
-		} else {
-			// path should be relative to current directory
-			newUrl = currentDir + unquotedOrigUrl.replace(/^\.\//, ""); // Strip leading './'
-		}
+    if (unquotedOrigUrl.indexOf("//") === 0) {
+      //TODO: should we add protocol?
+      newUrl = unquotedOrigUrl;
+    } else if (unquotedOrigUrl.indexOf("/") === 0) {
+      // path should be relative to the base url
+      newUrl = baseUrl + unquotedOrigUrl; // already starts with '/'
+    } else {
+      // path should be relative to current directory
+      newUrl = currentDir + unquotedOrigUrl.replace(/^\.\//, ""); // Strip leading './'
+    } // send back the fixed url(...)
 
-		// send back the fixed url(...)
-		return "url(" + JSON.stringify(newUrl) + ")";
-	});
 
-	// send back the fixed css
-	return fixedCss;
+    return "url(" + JSON.stringify(newUrl) + ")";
+  }); // send back the fixed css
+
+  return fixedCss;
 };
-
 
 /***/ }),
 /* 7 */
@@ -761,14 +774,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Sample_Pictures_Flowers_DSC_0020_th_jpg__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
 /* harmony import */ var _Sample_Pictures_Flowers_DSC_0020_th_jpg__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Sample_Pictures_Flowers_DSC_0020_th_jpg__WEBPACK_IMPORTED_MODULE_0__);
 
-function addImage(){
-    const img=document.createElement('img');
-    img.alt='missing image';
-    img.width='300'
-    img.src=_Sample_Pictures_Flowers_DSC_0020_th_jpg__WEBPACK_IMPORTED_MODULE_0___default.a;
 
-    const body=document.querySelector('body');
-    body.appendChild(img);
+function addImage() {
+  var img = document.createElement('img');
+  img.alt = 'missing image';
+  img.width = '300';
+  img.src = _Sample_Pictures_Flowers_DSC_0020_th_jpg__WEBPACK_IMPORTED_MODULE_0___default.a;
+  var body = document.querySelector('body');
+  body.appendChild(img);
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (addImage);

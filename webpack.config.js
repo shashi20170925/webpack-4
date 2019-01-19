@@ -29,6 +29,16 @@ module.exports = {
                 ]
             },
             {
+                test: /\.js$/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets:['@babel/env'],
+                        plugins: ['transform-class-properties']
+                    }
+                }
+            },
+            {
                 test: /\.(xml)$/, 
                 use: [
                     'xml-loader'
