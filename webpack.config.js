@@ -56,6 +56,6 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: 'style.[contenthash].css'
         }),
-        new CleanWebpackPlugin('dist')
+        new CleanWebpackPlugin(['dist','trash'])
     ]
 }
