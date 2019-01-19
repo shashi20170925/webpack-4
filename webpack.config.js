@@ -1,6 +1,8 @@
 const path=require('path');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin=require('mini-css-extract-plugin');
+const CleanWebpackPlugin=require('clean-webpack-plugin');
+
 module.exports = {
     entry: './src/index.js',
     output: {
@@ -53,6 +55,7 @@ module.exports = {
         new UglifyJsPlugin(),
         new MiniCssExtractPlugin({
             filename: 'style.[contenthash].css'
-        })
+        }),
+        new CleanWebpackPlugin('dist')
     ]
 }
