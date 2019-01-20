@@ -14,7 +14,12 @@ module.exports = {
         publicPath:''
     },
     
-    mode:'production',
+    mode: 'production',
+        optimization: {
+            splitChunks: {
+                chunks: "all"
+            }
+        },
     module: {
         rules: [
             {
@@ -69,14 +74,14 @@ module.exports = {
         new HtmlWebpackPlugin({
             title: "Hello World",
             filename: "hello-world.html",
-            chunks:['hello-world'],
+            chunks:['hello-world','vendors~hello-world~kiwi'],
             template: 'src/page-template.hbs',
             description: "Hello World"
         }),
         new HtmlWebpackPlugin({
             title: "Kiwi Page",
             filename: "kiwi.html",
-            chunks:['kiwi'],
+            chunks:['kiwi','vendors~hello-world~kiwi'],
             template: 'src/page-template.hbs',
             description: "Kiwi Page"
         })
