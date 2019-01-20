@@ -17,7 +17,9 @@ module.exports = {
     mode: 'production',
         optimization: {
             splitChunks: {
-                chunks: "all"
+                chunks: "all",
+                minSize: 10000,
+                automaticNameDelimiter: '_'
             }
         },
     module: {
@@ -74,14 +76,14 @@ module.exports = {
         new HtmlWebpackPlugin({
             title: "Hello World",
             filename: "hello-world.html",
-            chunks:['hello-world','vendors~hello-world~kiwi'],
+            chunks:['hello-world','vendors_hello-world_kiwi'],
             template: 'src/page-template.hbs',
             description: "Hello World"
         }),
         new HtmlWebpackPlugin({
             title: "Kiwi Page",
             filename: "kiwi.html",
-            chunks:['kiwi','vendors~hello-world~kiwi'],
+            chunks:['kiwi','vendors_hello-world_kiwi'],
             template: 'src/page-template.hbs',
             description: "Kiwi Page"
         })
